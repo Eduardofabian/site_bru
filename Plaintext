@@ -1,0 +1,16 @@
+bruemi-project/
+├── src/
+│   ├── assets/
+│   │   ├── css/
+│   │   │   └── style.css
+│   │   ├── js/
+│   │   │   └── main.js
+│   │   ├── images/
+│   │   │   ├── brand/           # Logos (Bruemi, Galapagos)
+│   │   │   ├── backgrounds/     # Hero images
+│   │   │   └── clients/         # Client logos
+│   │   └── fonts/               # Custom typography
+│   └── index.html
+├── .gitignore                   # To ignore node_modules or OS files
+├── LICENSE
+└── README.md                    # Project documentation
