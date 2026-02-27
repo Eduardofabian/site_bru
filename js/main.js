@@ -33,19 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleNavbarScroll() {
         const scrollY = window.scrollY;
 
-        // Adiciona sombra quando rolar
         if (scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
-
-        // Esconde/mostra navbar ao rolar (opcional)
-        // if (scrollY > lastScroll && scrollY > 200) {
-        //     navbar.style.transform = 'translateY(-100%)';
-        // } else {
-        //     navbar.style.transform = 'translateY(0)';
-        // }
 
         lastScroll = scrollY;
         ticking = false;
@@ -61,8 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ================================
     // HAMBURGER MENU (MOBILE)
     // ================================
-    
-    // Cria overlay para mobile
     const navOverlay = document.createElement('div');
     navOverlay.className = 'nav-overlay';
     document.body.appendChild(navOverlay);
@@ -96,17 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburger.addEventListener('click', toggleMenu);
     }
 
-    // Fecha ao clicar no overlay
     navOverlay.addEventListener('click', closeMenu);
 
-    // Fecha ao clicar em link do menu
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             closeMenu();
         });
     });
 
-    // Fecha com tecla ESC
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && navMenu.classList.contains('open')) {
             closeMenu();
@@ -127,10 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const sectionId = section.getAttribute('id');
 
             if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                // Remove active de todos
                 navLinks.forEach(link => link.classList.remove('active'));
 
-                // Adiciona active no link correspondente
                 const activeLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
                 if (activeLink) {
                     activeLink.classList.add('active');
@@ -142,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', highlightNavLink);
 
     // ================================
-    // SMOOTH SCROLL (fallback)
+    // SMOOTH SCROLL
     // ================================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -196,14 +181,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         counters.forEach(counter => {
             const target = parseInt(counter.getAttribute('data-target'));
-            const duration = 2000; // 2 segundos
+            const duration = 2000;
             const startTime = performance.now();
 
             function updateCounter(currentTime) {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-
-                // Easing function (ease-out)
                 const easeOut = 1 - Math.pow(1 - progress, 3);
                 const current = Math.floor(easeOut * target);
 
@@ -222,7 +205,6 @@ document.addEventListener('DOMContentLoaded', () => {
         countersStarted = true;
     }
 
-    // Observer para iniciar contadores quando visíveis
     const statsSection = document.querySelector('.hero-stats');
     if (statsSection) {
         const statsObserver = new IntersectionObserver((entries) => {
@@ -238,44 +220,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ================================
-    // FADE-IN ANIMATIONS ON SCROLL
+    // SCROLL REVEAL ANIMATIONS
     // ================================
-    function setupScrollAnimations() {
-        // Seleciona elementos para animar
-        const animateElements = document.querySelectorAll(
+    function setupAdvancedScrollAnimations() {
+        const revealElements = document.querySelectorAll(
             '.servico-card, .sobre-text, .sobre-image, ' +
             '.contato-info, .contato-form-wrapper, ' +
-            '.section-header, .depoimentos-slider'
+            '.section-header, .depoimentos-slider, ' +
+            '.phase-item, .hero-stat'
         );
 
-        // Adiciona classe base
-        animateElements.forEach(el => {
-            el.classList.add('fade-in');
+        revealElements.forEach((el, index) => {
+            if (el.classList.contains('sobre-text') || el.classList.contains('contato-info')) {
+                el.classList.add('fade-in-left');
+            } else if (el.classList.contains('sobre-image') || el.classList.contains('contato-form-wrapper')) {
+                el.classList.add('fade-in-right');
+            } else if (el.classList.contains('servico-card')) {
+                el.classList.add('fade-in');
+                const cardIndex = Array.from(document.querySelectorAll('.servico-card')).indexOf(el);
+                el.classList.add(`stagger-${cardIndex + 1}`);
+            } else {
+                el.classList.add('fade-in');
+            }
         });
 
-        // Intersection Observer
-        const fadeObserver = new IntersectionObserver((entries) => {
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Delay escalonado para cards
-                    const delay = entry.target.getAttribute('data-aos-delay') || 0;
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, parseInt(delay));
-
-                    fadeObserver.unobserve(entry.target);
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
                 }
             });
         }, {
-            threshold: 0.15,
-            rootMargin: '0px 0px -50px 0px'
+            threshold: 0.1,
+            rootMargin: '0px 0px -60px 0px'
         });
 
-        animateElements.forEach(el => fadeObserver.observe(el));
+        revealElements.forEach(el => revealObserver.observe(el));
     }
 
-    setupScrollAnimations();
-
+    setupAdvancedScrollAnimations();
     // ================================
     // SLIDER DE DEPOIMENTOS
     // ================================
@@ -288,11 +272,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalSlides = depCards.length;
 
     function goToSlide(index) {
-        // Normaliza o index
         if (index < 0) index = totalSlides - 1;
         if (index >= totalSlides) index = 0;
 
-        // Remove active de todos
         depCards.forEach(card => {
             card.classList.remove('active');
             card.style.transform = 'translateX(60px)';
@@ -301,7 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         depDots.forEach(dot => dot.classList.remove('active'));
 
-        // Ativa o slide atual
         depCards[index].classList.add('active');
         depCards[index].style.transform = 'translateX(0)';
         depCards[index].style.opacity = '1';
@@ -321,7 +302,6 @@ document.addEventListener('DOMContentLoaded', () => {
         goToSlide(currentSlide - 1);
     }
 
-    // Auto-play
     function startAutoPlay() {
         slideInterval = setInterval(nextSlide, 5000);
     }
@@ -333,7 +313,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Event Listeners do Slider
     if (depNext) {
         depNext.addEventListener('click', () => {
             stopAutoPlay();
@@ -359,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Swipe support para mobile
+    // Swipe support mobile
     let touchStartX = 0;
     let touchEndX = 0;
     const sliderEl = document.querySelector('.depoimentos-slider');
@@ -382,21 +361,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (Math.abs(diff) > threshold) {
             stopAutoPlay();
             if (diff > 0) {
-                nextSlide(); // Swipe left = próximo
+                nextSlide();
             } else {
-                prevSlide(); // Swipe right = anterior
+                prevSlide();
             }
             startAutoPlay();
         }
     }
 
-    // Inicia auto-play do slider
     if (totalSlides > 0) {
         goToSlide(0);
         startAutoPlay();
     }
 
-    // Pausa auto-play quando não visível
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
             stopAutoPlay();
@@ -409,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // FORMULÁRIO DE CONTATO
     // ================================
     if (contatoForm) {
-        // Máscara de telefone simples
+        // Máscara de telefone
         const telefoneInput = document.getElementById('telefone');
         if (telefoneInput) {
             telefoneInput.addEventListener('input', (e) => {
@@ -429,17 +406,15 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Submit do formulário
+        // Submit
         contatoForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            // Checa honeypot
             const honeypot = contatoForm.querySelector('.honeypot');
             if (honeypot && honeypot.value !== '') {
-                return; // É bot
+                return;
             }
 
-            // Validação básica
             const nome = document.getElementById('nome').value.trim();
             const telefone = document.getElementById('telefone').value.trim();
             const email = document.getElementById('email').value.trim();
@@ -454,13 +429,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Simula envio (loading)
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
-            // Simula delay de envio (substituir por fetch real)
             setTimeout(() => {
-                // Esconde o formulário e mostra sucesso
                 const formFields = contatoForm.querySelectorAll('.form-group, .form-row, .btn-full, .form-note');
                 formFields.forEach(field => {
                     field.style.display = 'none';
@@ -468,7 +440,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 formSuccess.classList.add('show');
 
-                // Reset após 5 segundos
                 setTimeout(() => {
                     formFields.forEach(field => {
                         field.style.display = '';
@@ -489,7 +460,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showFormError(message) {
-        // Remove erro anterior se existir
         const existingError = contatoForm.querySelector('.form-error');
         if (existingError) existingError.remove();
 
@@ -512,7 +482,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         submitBtn.parentNode.insertBefore(errorDiv, submitBtn);
 
-        // Remove erro após 4 segundos
         setTimeout(() => {
             if (errorDiv.parentNode) {
                 errorDiv.style.opacity = '0';
@@ -524,21 +493,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ================================
-    // PARALLAX SUTIL NO HERO (desktop)
-    // ================================
-    const hero = document.querySelector('.hero');
-
-    if (hero && window.innerWidth > 768) {
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            if (scrolled < window.innerHeight) {
-                hero.style.backgroundPositionY = `${scrolled * 0.4}px`;
-            }
-        });
-    }
-
-    // ================================
-    // CLIENTES CAROUSEL — PAUSE ON HOVER
+    // CLIENTES CAROUSEL PAUSE
     // ================================
     const clientesTrack = document.querySelector('.clientes-track');
     if (clientesTrack) {
@@ -557,15 +512,337 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
-            // Fecha menu mobile se a tela ficar grande
             if (window.innerWidth > 768) {
                 closeMenu();
             }
         }, 250);
     });
+       // ================================
+    // CHAT WIDGET
+    // ================================
+    const chatWidget = document.getElementById('chatWidget');
+    const chatToggle = document.getElementById('chatToggle');
+    const chatWindow = document.getElementById('chatWindow');
+    const chatClose = document.getElementById('chatClose');
+    const chatBody = document.getElementById('chatBody');
+    const chatInput = document.getElementById('chatInput');
+    const chatSend = document.getElementById('chatSend');
+    const chatOptions = document.getElementById('chatOptions');
+
+    // Respostas automáticas do bot
+    const botResponses = {
+        valuation: {
+            text: 'Ótimo interesse! 📊 Nosso serviço de Valuation inclui avaliação completa do valor de mercado da sua empresa usando metodologias como DCF, múltiplos e mais. Quer agendar uma conversa com nosso especialista?',
+            followUp: ['📞 Sim, quero agendar!', '💡 Quero saber mais detalhes', '🔙 Ver outras opções']
+        },
+        servicos: {
+            text: 'Oferecemos 6 serviços principais:\n\n📊 Gestão Estratégica de Valuation\n💰 Valuation\n📋 Plano de Negócio\n👥 Plano de Vesting\n🧑‍💼 Capital Humano\n🤝 Fusões & Aquisições\n\nQual deles te interessa mais?',
+            followUp: ['📊 Valuation', '📋 Plano de Negócio', '🤝 M&A', '📞 Falar com consultor']
+        },
+        contato: {
+            text: 'Perfeito! Você pode falar diretamente com nossa equipe:\n\n📱 WhatsApp: (11) 96342-7660\n📧 Ou preencha o formulário na seção de contato.\n\nPosso te direcionar agora?',
+            followUp: ['📱 Ir para WhatsApp', '📧 Ir para formulário']
+        },
+        preco: {
+            text: 'Nossos valores são personalizados de acordo com o tamanho e necessidade de cada empresa. 💼\n\nPara receber uma proposta, o melhor caminho é uma conversa rápida de 15 minutos com nosso time. Sem compromisso!',
+            followUp: ['📞 Agendar conversa', '📱 Chamar no WhatsApp', '🔙 Ver outras opções']
+        },
+        agendar: {
+            text: 'Excelente decisão! 🎯\n\nVou te direcionar para nosso WhatsApp para agendar o melhor horário. Nosso time responde rapidamente!\n\n👉 Clique no botão do WhatsApp no canto da tela ou acesse: wa.me/5511963427660',
+            followUp: ['📱 Abrir WhatsApp', '🔙 Voltar ao início']
+        },
+        planonegocios: {
+            text: 'Nosso Plano de Negócio é ideal para empresas que buscam captação de investimento ou reestruturação. 📋\n\nDesenvolvemos um documento completo com análise de mercado, projeções financeiras e estratégia de crescimento.',
+            followUp: ['📞 Agendar conversa', '📊 Ver outros serviços', '🔙 Voltar ao início']
+        },
+        ma: {
+            text: 'Nossa assessoria em Fusões & Aquisições (M&A) cobre todo o processo: 🤝\n\n• Preparação e valuation\n• Identificação de compradores/investidores\n• Negociação e due diligence\n• Fechamento do deal\n\nQuer conversar sobre o seu caso?',
+            followUp: ['📞 Sim, quero conversar!', '📊 Ver outros serviços', '🔙 Voltar ao início']
+        },
+        default: {
+            text: 'Obrigado pela mensagem! 😊 Nossa equipe vai analisar e retornar em breve. Para atendimento imediato, entre em contato pelo WhatsApp: (11) 96342-7660',
+            followUp: ['📱 Ir para WhatsApp', '🔙 Ver opções']
+        }
+    };
+
+    // Toggle chat
+    function toggleChat() {
+        if (chatWidget) {
+            chatWidget.classList.toggle('open');
+        }
+    }
+
+    function closeChatWindow() {
+        if (chatWidget) {
+            chatWidget.classList.remove('open');
+        }
+    }
+
+    if (chatToggle) chatToggle.addEventListener('click', toggleChat);
+    if (chatClose) chatClose.addEventListener('click', closeChatWindow);
+
+    // Fechar chat com ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && chatWidget && chatWidget.classList.contains('open')) {
+            closeChatWindow();
+        }
+    });
+
+    // Adicionar mensagem no chat
+    function addMessage(text, sender) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `chat-message ${sender}`;
+
+        const now = new Date();
+        const time = now.getHours().toString().padStart(2, '0') + ':' +
+                     now.getMinutes().toString().padStart(2, '0');
+
+        msgDiv.innerHTML = `
+            <div class="chat-bubble">${text.replace(/\n/g, '<br>')}</div>
+            <span class="chat-time">${time}</span>
+        `;
+
+        chatBody.appendChild(msgDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        return msgDiv;
+    }
+
+    // Typing indicator (bolinhas pulsando)
+    function showTyping() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'chat-message bot';
+        typingDiv.id = 'typingIndicator';
+        typingDiv.innerHTML = `
+            <div class="typing-indicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        `;
+        chatBody.appendChild(typingDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function hideTyping() {
+        const typing = document.getElementById('typingIndicator');
+        if (typing) typing.remove();
+    }
+
+    // Adicionar opções de follow-up
+    function addFollowUpOptions(options) {
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'chat-options';
+
+        options.forEach(option => {
+            const btn = document.createElement('button');
+            btn.className = 'chat-option';
+            btn.textContent = option;
+            btn.addEventListener('click', () => handleOptionClick(option));
+            optionsDiv.appendChild(btn);
+        });
+
+        chatBody.appendChild(optionsDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    // Handler para clique nas opções
+    function handleOptionClick(optionText) {
+        // Adiciona mensagem do usuário
+        addMessage(optionText, 'user');
+
+        // Remove opções antigas para limpar
+        const oldOptions = chatBody.querySelectorAll('.chat-options');
+        oldOptions.forEach(opt => {
+            opt.style.opacity = '0.5';
+            opt.style.pointerEvents = 'none';
+        });
+
+        // Determina resposta baseado no texto
+        let responseKey = 'default';
+        const text = optionText.toLowerCase();
+
+        if (text.includes('valuation') || text.includes('📊')) {
+            responseKey = 'valuation';
+        } else if (text.includes('serviço') || text.includes('🛠️') || text.includes('conhecer') || text.includes('outros serviços')) {
+            responseKey = 'servicos';
+        } else if (text.includes('consultor') || text.includes('📞') || text.includes('agendar') || text.includes('conversa')) {
+            responseKey = 'agendar';
+        } else if (text.includes('contato') || text.includes('falar')) {
+            responseKey = 'contato';
+        } else if (text.includes('custa') || text.includes('💰') || text.includes('preço') || text.includes('preco')) {
+            responseKey = 'preco';
+        } else if (text.includes('plano de negócio') || text.includes('plano de negocio') || text.includes('📋')) {
+            responseKey = 'planonegocios';
+        } else if (text.includes('m&a') || text.includes('🤝') || text.includes('fusão') || text.includes('fusões') || text.includes('aquisição')) {
+            responseKey = 'ma';
+        } else if (text.includes('whatsapp') || text.includes('📱')) {
+            // Abre WhatsApp
+            window.open('https://wa.me/5511963427660?text=Olá! Vim pelo chat do site e gostaria de saber mais sobre os serviços da Bruemi.', '_blank');
+            responseKey = 'agendar';
+        } else if (text.includes('formulário') || text.includes('📧')) {
+            // Fecha chat e vai pro formulário
+            closeChatWindow();
+            setTimeout(() => {
+                const contatoSection = document.querySelector('#contato');
+                if (contatoSection) {
+                    const navHeight = navbar.offsetHeight;
+                    window.scrollTo({
+                        top: contatoSection.offsetTop - navHeight,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 300);
+            return;
+        } else if (text.includes('voltar') || text.includes('🔙') || text.includes('outras opções') || text.includes('ver opções') || text.includes('início')) {
+            responseKey = 'servicos';
+        } else if (text.includes('detalhes') || text.includes('💡') || text.includes('saber mais')) {
+            responseKey = 'servicos';
+        }
+
+        const response = botResponses[responseKey];
+
+        // Mostra typing e depois responde
+        showTyping();
+
+        const typingDelay = 1000 + Math.random() * 800;
+
+        setTimeout(() => {
+            hideTyping();
+            addMessage(response.text, 'bot');
+
+            if (response.followUp) {
+                setTimeout(() => {
+                    addFollowUpOptions(response.followUp);
+                }, 600);
+            }
+        }, typingDelay);
+    }
+
+    // Handler para input de texto livre
+    function handleChatSend() {
+        if (!chatInput) return;
+
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        addMessage(text, 'user');
+        chatInput.value = '';
+
+        // Desabilita opções antigas
+        const oldOptions = chatBody.querySelectorAll('.chat-options');
+        oldOptions.forEach(opt => {
+            opt.style.opacity = '0.5';
+            opt.style.pointerEvents = 'none';
+        });
+
+        // Tenta identificar intenção
+        let responseKey = 'default';
+        const lowerText = text.toLowerCase();
+
+        if (lowerText.includes('valuation') || lowerText.includes('valor da empresa') || lowerText.includes('avaliação')) {
+            responseKey = 'valuation';
+        } else if (lowerText.includes('serviço') || lowerText.includes('o que vocês fazem') || lowerText.includes('como funciona')) {
+            responseKey = 'servicos';
+        } else if (lowerText.includes('preço') || lowerText.includes('custo') || lowerText.includes('quanto') || lowerText.includes('valor')) {
+            responseKey = 'preco';
+        } else if (lowerText.includes('contato') || lowerText.includes('falar') || lowerText.includes('ligar') || lowerText.includes('telefone')) {
+            responseKey = 'contato';
+        } else if (lowerText.includes('agendar') || lowerText.includes('reunião') || lowerText.includes('consulta') || lowerText.includes('marcar')) {
+            responseKey = 'agendar';
+        } else if (lowerText.includes('plano') || lowerText.includes('negócio') || lowerText.includes('negocio')) {
+            responseKey = 'planonegocios';
+        } else if (lowerText.includes('fusão') || lowerText.includes('aquisição') || lowerText.includes('m&a') || lowerText.includes('vender empresa')) {
+            responseKey = 'ma';
+        } else if (lowerText.includes('olá') || lowerText.includes('oi') || lowerText.includes('bom dia') || lowerText.includes('boa tarde') || lowerText.includes('boa noite')) {
+            // Saudação
+            showTyping();
+            setTimeout(() => {
+                hideTyping();
+                addMessage('Olá! 😊 Que bom ter você aqui! Como posso ajudar?', 'bot');
+                setTimeout(() => {
+                    addFollowUpOptions(['📊 Quero saber sobre Valuation', '🛠️ Conhecer os serviços', '📞 Falar com um consultor', '💰 Quanto custa?']);
+                }, 500);
+            }, 800);
+            return;
+        } else if (lowerText.includes('obrigado') || lowerText.includes('obrigada') || lowerText.includes('valeu') || lowerText.includes('thanks')) {
+            showTyping();
+            setTimeout(() => {
+                hideTyping();
+                addMessage('Por nada! 😄 Estamos sempre à disposição. Se precisar de algo mais, é só chamar!', 'bot');
+                setTimeout(() => {
+                    addFollowUpOptions(['📱 Ir para WhatsApp', '🔙 Ver opções']);
+                }, 500);
+            }, 800);
+            return;
+        }
+
+        const response = botResponses[responseKey];
+
+        showTyping();
+        setTimeout(() => {
+            hideTyping();
+            addMessage(response.text, 'bot');
+            if (response.followUp) {
+                setTimeout(() => {
+                    addFollowUpOptions(response.followUp);
+                }, 600);
+            }
+        }, 1200 + Math.random() * 600);
+    }
+
+    // Event listeners do chat input
+    if (chatSend) {
+        chatSend.addEventListener('click', handleChatSend);
+    }
+
+    if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleChatSend();
+            }
+        });
+    }
+
+    // Clique nas opções iniciais do chat
+    if (chatOptions) {
+        chatOptions.querySelectorAll('.chat-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const text = option.textContent;
+                handleOptionClick(text);
+            });
+        });
+    }
+
+    // Auto-destaque do badge após 30 segundos
+    setTimeout(() => {
+        if (chatWidget && !chatWidget.classList.contains('open')) {
+            const badge = chatWidget.querySelector('.chat-badge');
+            if (badge) {
+                badge.style.animation = 'badgePulse 0.5s ease 5';
+            }
+        }
+    }, 30000);
+
+    // Auto-abrir chat após 60 segundos na página (opcional)
+    setTimeout(() => {
+        if (chatWidget && !chatWidget.classList.contains('open')) {
+            // Só mostra uma notificação visual, não abre automaticamente
+            const toggle = chatWidget.querySelector('.chat-toggle');
+            if (toggle) {
+                toggle.style.animation = 'none';
+                toggle.style.transform = 'scale(1.15)';
+                setTimeout(() => {
+                    toggle.style.transform = '';
+                    toggle.style.transition = 'all 0.3s ease';
+                }, 300);
+            }
+        }
+    }, 60000);
 
     // ================================
-    // CONSOLE LOG BRANDING
+    // CONSOLE BRANDING
     // ================================
     console.log(
         '%c🏢 Bruemi Gestão Empresarial',
@@ -575,5 +852,9 @@ document.addEventListener('DOMContentLoaded', () => {
         '%cInteligência Estratégica Orientada por Dados',
         'color: #1B2A4A; font-size: 12px;'
     );
+    console.log(
+        '%c🌐 www.bruemi.com.br',
+        'color: #636e72; font-size: 11px;'
+    );
 
-});
+}); // <-- FECHA O DOMContentLoaded
