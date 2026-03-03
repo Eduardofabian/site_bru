@@ -1,22 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const navRoot = document.getElementById('nav-root');
+    const nav = document.getElementById('nav-root');
     const openChat = document.getElementById('open-chat');
     const closeChat = document.getElementById('close-chat');
     const chatWidget = document.getElementById('chat-ui');
 
-    // 1. NAVBAR DUAL STATE (INDICIUM STYLE)
+    // 1. NAVBAR DUAL-STATE (COMPACTAO AO SCROLL)
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 40) {
-            navRoot.classList.add('scrolled');
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
         } else {
-            navRoot.classList.remove('scrolled');
+            nav.classList.remove('scrolled');
         }
     }, { passive: true });
 
     // 2. CHATBOT TOGGLE
     openChat.addEventListener('click', () => {
-        const isFlex = chatWidget.style.display === 'flex';
-        chatWidget.style.display = isFlex ? 'none' : 'flex';
+        chatWidget.style.display = chatWidget.style.display === 'flex' ? 'none' : 'flex';
     });
     closeChat.addEventListener('click', () => {
         chatWidget.style.display = 'none';
@@ -30,11 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const target = +entry.target.getAttribute('data-target');
                 let count = 0;
                 const update = () => {
-                    const inc = target / 60;
+                    const inc = target / 50;
                     if (count < target) {
                         count += inc;
                         entry.target.innerText = Math.ceil(count);
-                        setTimeout(update, 15);
+                        setTimeout(update, 20);
                     } else { entry.target.innerText = target; }
                 };
                 update();
