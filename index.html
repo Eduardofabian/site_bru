@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -19,7 +20,7 @@
         </div>
         <nav class="nav-main">
             <div class="container nav-wrapper">
-                <a href="#home" class="logo">
+                <a href="javascript:void(0)" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="logo">
                     <div class="logo-box">B</div>
                     <div class="logo-text">
                         <span class="brand">Bruemi</span>
@@ -27,39 +28,38 @@
                     </div>
                 </a>
                 <ul class="nav-links">
-                    <li><a href="#home" class="nav-item">Home</a></li>
-                    <li><a href="#servicos" class="nav-item">Nossos Serviços</a></li>
+                    <li><a href="javascript:void(0)" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="nav-item">Sobre</a></li>
+                    <li><a href="#servicos" class="nav-item">Serviços</a></li>
                     <li><a href="#clientes" class="nav-item">Clientes</a></li>
-                    <li><a href="#depoimentos" class="nav-item">Depoimentos</a></li>
                     <li><a href="#contato" class="btn-cta">Falar com Consultor</a></li>
                 </ul>
-                <div class="burger" id="mobile-menu"><span></span><span></span><span></span></div>
+                <div class="burger" id="mobile-toggle"><span></span><span></span><span></span></div>
             </div>
         </nav>
     </header>
 
     <main>
         <section class="hero" id="home">
-            <div class="hero-bg-overlay"></div>
+            <div class="hero-grid-overlay"></div>
             <div class="container hero-content">
                 <div class="hero-badge">Expertise consolidada há 25 anos</div>
                 <h1 class="hero-title">Decisões de Impacto <br><span class="highlight">Baseadas em Dados</span></h1>
                 <p class="hero-lead">Valuation, M&A e Planejamento Estratégico com a solidez que o mercado de capitais exige.</p>
                 
                 <div class="hero-actions">
-                    <a href="#contato" class="btn btn-primary">Agendar Consultoria</a>
-                    <a href="#servicos" class="btn btn-outline">Explorar Soluções</a>
+                    <a href="#contato" class="btn btn-filled">Agendar Consultoria</a>
+                    <a href="#servicos" class="btn btn-outline-hero">Nossas Soluções</a>
                 </div>
 
                 <div class="hero-stats">
                     <div class="stat-box">
                         <span class="counter" data-target="500">0</span><span class="plus">M+</span>
-                        <small>Em Valuations</small>
+                        <label>Em Valuations</label>
                     </div>
                     <div class="stat-divider"></div>
                     <div class="stat-box">
                         <span class="counter" data-target="50">0</span><span class="plus">+</span>
-                        <small>Empresas Atendidas</small>
+                        <label>Empresas Atendidas</label>
                     </div>
                 </div>
             </div>
@@ -68,123 +68,99 @@
         <section class="services" id="servicos">
             <div class="container">
                 <div class="section-intro">
-                    <span class="tag-blue">O que fazemos</span>
+                    <span class="tag-blue">Nossas Áreas de Atuação</span>
                     <h2 class="section-title">Soluções Estratégicas</h2>
-                    <p class="section-desc">Cuidamos da evolução empresarial em todas as fases: Ideação → Operação → Tração → Escala → Sucessão/M&A.</p>
+                    <div class="title-line"></div>
                 </div>
 
                 <div class="services-grid">
                     <div class="service-card">
                         <div class="s-icon"><i class="fas fa-chart-pie"></i></div>
-                        <h3>Gestão Estratégica de Valuation (GEV)</h3>
-                        <p>Desenvolvemos a GEV orientada por dados, que une planejamento e tecnologia para estruturar uma jornada de crescimento econômico-financeiro de 5 anos.</p>
+                        <h3>Gestão Estratégica de Valuation</h3>
+                        <p>Desenvolvemos a GEV orientada por dados para estruturar uma jornada de crescimento de 5 anos.</p>
                     </div>
                     <div class="service-card">
                         <div class="s-icon"><i class="fas fa-calculator"></i></div>
                         <h3>Valuation Profissional</h3>
-                        <p>Avaliação por FCD (Fluxo de Caixa Descontado), análise de demonstrações contábeis (IFRS) e interface de negociação com investidores.</p>
+                        <p>Avaliação por FCD (Fluxo de Caixa Descontado) e análise de demonstrações contábeis padrão IFRS.</p>
                     </div>
                     <div class="service-card">
                         <div class="s-icon"><i class="fas fa-file-invoice-dollar"></i></div>
-                        <h3>Plano de Negócio (BIZ PLAN)</h3>
-                        <p>Estratégia de negócio (Propósito, ICP, Precificação) e viabilidade financeira completa (CAPEX, DRE Projetado, Fluxo de Caixa).</p>
+                        <h3>Desenvolvimento de Plano de Negócio</h3>
+                        <p>Estratégia completa (Propósito, ICP, Precificação) e viabilidade econômica para investimentos.</p>
                     </div>
                     <div class="service-card">
                         <div class="s-icon"><i class="fas fa-crown"></i></div>
-                        <h3>Planos de Vesting</h3>
-                        <p>Estruturação de contratos e acordos de quotistas baseados em metas evolutivas de performance para atração de novos sócios e executivos.</p>
+                        <h3>Plano de Vesting para Sócios</h3>
+                        <p>Programas baseados em metas evolutivas de performance para atração de talentos e executivos.</p>
                     </div>
                     <div class="service-card">
                         <div class="s-icon"><i class="fas fa-users-cog"></i></div>
-                        <h3>Solução em Capital Humano</h3>
-                        <p>Arquitetura de perfis, triagem e seleção técnica/comportamental com Know-how de grandes empresas aplicado a PMEs e Startups.</p>
+                        <h3>Soluções em Capital Humano</h3>
+                        <p>Arquitetura de perfis sênior e gestão estratégica de pessoas para alavancagem de resultados.</p>
                     </div>
                     <div class="service-card">
                         <div class="s-icon"><i class="fas fa-handshake"></i></div>
                         <h3>Fusões e Aquisições (M&A)</h3>
-                        <p>Assessoria completa na venda/compra, criação de joint-ventures e captação de investimento para aceleração de valor.</p>
+                        <p>Assessoria completa na venda, compra, joint-ventures e captação acelerada de investimento.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <section class="marquee-section" id="clientes">
-            <div class="container">
+            <div class="container text-center">
                 <h2 class="marquee-label">Empresas que confiam na inteligência Bruemi</h2>
             </div>
-            <div class="marquee-wrapper">
-                <div class="marquee-content">
-                    <img src="images/logo/tesla.jpg" alt="Tesla">
-                    <img src="images/logo/galapagos.jpg" alt="Galápagos">
-                    <img src="images/logo/today.jpg" alt="Today">
-                    <img src="images/logo/recheio.jpg" alt="Recheio">
-                    <img src="images/logo/mind.jpg" alt="Mind">
-                    <img src="images/logo/pulsar.jpg" alt="Pulsar">
-                    <img src="images/logo/cpb.jpg" alt="CPB">
-                    <img src="images/logo/tesla.jpg" alt="Tesla">
-                    <img src="images/logo/galapagos.jpg" alt="Galápagos">
-                    <img src="images/logo/today.jpg" alt="Today">
-                    <img src="images/logo/recheio.jpg" alt="Recheio">
-                    <img src="images/logo/mind.jpg" alt="Mind">
-                    <img src="images/logo/pulsar.jpg" alt="Pulsar">
-                    <img src="images/logo/cpb.jpg" alt="CPB">
+            <div class="marquee-outer">
+                <div class="marquee-inner">
+                    <span class="c-logo">Tesla</span>
+                    <span class="c-logo">Galápagos</span>
+                    <span class="c-logo">DMC Brazil</span>
+                    <span class="c-logo">Today</span>
+                    <span class="c-logo">Mind</span>
+                    <span class="c-logo">Recheio</span>
+                    <span class="c-logo">Pulsar</span>
+                    <span class="c-logo">Tesla</span>
+                    <span class="c-logo">Galápagos</span>
+                    <span class="c-logo">DMC Brazil</span>
+                    <span class="c-logo">Today</span>
+                    <span class="c-logo">Mind</span>
+                    <span class="c-logo">Recheio</span>
+                    <span class="c-logo">Pulsar</span>
                 </div>
             </div>
         </section>
 
-        <section class="testimonials" id="depoimentos">
+        <section class="testimonials">
             <div class="container">
-                <div class="testimonial-card">
-                    <div class="quote-mark">“</div>
-                    <p class="quote-text">Fundamental é a palavra que resume o quanto a Bruemi foi importante e continua sendo crucial para o nosso crescimento. A experiência que Victor trouxe foi essencial para que a nossa organização chegasse onde está.</p>
-                    <div class="quote-author">
+                <div class="t-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p class="t-text">"A Bruemi foi fundamental para nossa reestruturação financeira e operacional. O acompanhamento próximo fez toda a diferença em nossa maturidade empresarial."</p>
+                    <div class="t-footer">
                         <strong>Yuri Fang</strong>
                         <span>CEO, Galápagos Jogos</span>
                     </div>
                 </div>
             </div>
         </section>
-
-        <section class="contact" id="contato">
-            <div class="container contact-grid">
-                <div class="contact-info">
-                    <h2 class="title-dark">Vamos falar sobre o futuro da sua empresa?</h2>
-                    <p class="body-gray">Estamos no Brooklin, São Paulo, prontos para estruturar sua próxima fase de escala.</p>
-                    <ul class="info-list">
-                        <li><i class="fas fa-phone-alt"></i> 11 96342-7660</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Rua Arandú 481, cj 22 - SP</li>
-                    </ul>
-                </div>
-                <div class="form-wrapper">
-                    <form id="bruemi-form">
-                        <div class="input-group">
-                            <input type="text" placeholder="Seu Nome" required>
-                            <input type="email" placeholder="Seu E-mail" required>
-                        </div>
-                        <input type="text" id="phone" placeholder="Telefone">
-                        <textarea placeholder="Como podemos ajudar?"></textarea>
-                        <button type="submit" class="btn-submit">Enviar Mensagem</button>
-                    </form>
-                </div>
-            </div>
-        </section>
     </main>
 
-    <div class="chatbot-ui" id="chat-box">
+    <div class="chat-widget" id="chat-ui">
         <div class="chat-header">Bruemi Assistant <span id="close-chat">×</span></div>
         <div class="chat-body" id="chat-msgs">
-            <div class="msg-bot">Olá! Sou o assistente da Bruemi. Como posso ajudar com seu Valuation ou M&A hoje?</div>
+            <div class="msg-bot">Olá! Como posso ajudar sua empresa hoje?</div>
         </div>
         <div class="chat-footer">
-            <input type="text" placeholder="Digite aqui...">
+            <input type="text" placeholder="Dúvida sobre Valuation?">
             <button><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
-    <div class="chat-btn" id="open-chat"><i class="fas fa-comments"></i></div>
+    <div class="chat-btn" id="open-chat"><i class="fas fa-comment-dots"></i></div>
 
-    <footer class="main-footer">
+    <footer class="footer">
         <div class="container">
-            <p>© 2026 Bruemi Gestão Empresarial. Todos os direitos reservados.</p>
+            <p>© 2026 Bruemi Gestão Empresarial. Brooklin, São Paulo.</p>
         </div>
     </footer>
 
