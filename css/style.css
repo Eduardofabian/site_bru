@@ -1,95 +1,119 @@
 :root {
-    --bg-base: #070B12;
-    --bg-surface: rgba(13, 20, 32, 0.8);
-    --gold-500: #C8962E;
-    --navy-900: #070B12;
-    --text-primary: #F0F4FF;
-    --text-secondary: #8A97B0;
-    --border-subtle: rgba(255, 255, 255, 0.07);
+    --azul: #17479E;
+    --azul-escuro: #0E3180;
+    --branco: #FFFFFF;
+    --cinza: #585858;
+    --borda: rgba(23, 71, 158, 0.15);
+    
     --font-heading: 'Syne', sans-serif;
-    --font-body: 'DM Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
 }
 
-/* RESET & TYPOGRAPHY FIX */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+html { scroll-behavior: smooth; }
+
 body {
-    background-color: var(--bg-base);
-    color: var(--text-primary);
     font-family: var(--font-body);
-    line-height: 1.6; /* Aumentado para evitar achatamento */
-    overflow-x: hidden;
+    background-color: var(--branco);
+    color: var(--cinza);
+    line-height: 1.6; /* CORREÇÃO: Letras não ficam mais achatadas */
     -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 { 
-    font-family: var(--font-heading); 
-    line-height: 1.2; /* Títulos precisam de um pouco mais de ar */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
 }
 
-/* NAV COMPONENT (ESTILO INDICIUM) */
-.navbar11_component {
+/* NAVBAR ESTRUTURADA */
+.navbar-wrapper {
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: transform;
+    transition: transform 0.4s ease;
 }
 
-/* Estado Compacto (Esconde o banner e encolhe a nav) */
-.navbar11_component.state-compact {
-    transform: translateY(-36px);
-}
-
-.callout-banner {
-    height: 36px;
-    background: var(--gold-500);
-    color: var(--navy-900);
-    display: flex;
-    align-items: center;
+.top-banner {
+    background: var(--azul);
+    color: var(--branco);
+    text-align: center;
+    padding: 8px 0;
     font-size: 0.7rem;
-    font-weight: 700;
+    font-weight: 600;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
 }
 
-.navbar-main-container {
-    height: 80px;
-    background: var(--bg-surface);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-subtle);
+.nav-main {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--borda);
+    height: 85px;
     display: flex;
     align-items: center;
-    transition: height 0.3s ease;
+    transition: all 0.3s ease;
 }
 
-.navbar11_component.state-compact .navbar-main-container {
+/* ESTADO SCROLLED (ESTILO INDICIUM) */
+.navbar-wrapper.scrolled {
+    transform: translateY(-34px); /* Esconde o banner */
+}
+
+.navbar-wrapper.scrolled .nav-main {
+    background: var(--azul-escuro);
     height: 70px;
 }
 
-/* AJUSTE DAS LETRAS NO SCROLL (FLUX TEXT) */
-.scroll-text-wrapper {
-    line-height: 1.3 !important; /* CORREÇÃO: Isso evita o aspecto achatado */
-    display: inline-block;
+.navbar-wrapper.scrolled .nav-main .brand-name,
+.navbar-wrapper.scrolled .nav-main .nav-menu a {
+    color: var(--branco);
 }
 
-/* BOTÕES */
-.btn-nav-cta {
-    background: var(--gold-500);
-    color: var(--navy-900);
-    padding: 0.6rem 1.2rem;
-    border-radius: 4px;
-    font-weight: 700;
-    font-size: 0.8rem;
-    text-transform: uppercase;
+/* LOGO */
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-box { background: var(--azul); color: #fff; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-weight: 800; border-radius: 4px; }
+.brand-name { display: block; font-family: var(--font-heading); font-size: 1.5rem; color: var(--azul-escuro); line-height: 1; }
+.brand-sub { font-size: 0.55rem; color: var(--azul); font-weight: 700; letter-spacing: 1.5px; }
+
+/* MENU */
+.nav-menu { display: flex; align-items: center; gap: 30px; list-style: none; }
+.nav-menu a { text-decoration: none; color: var(--azul-escuro); font-size: 0.85rem; font-weight: 500; transition: 0.3s; }
+.nav-menu a:hover { color: var(--azul); }
+.btn-cta-nav { background: var(--azul); color: #fff !important; padding: 10px 20px; border-radius: 4px; }
+
+/* HERO SECTION */
+.hero {
+    background-color: var(--azul-escuro);
+    background-image: radial-gradient(circle at 20% 30%, rgba(23, 71, 158, 0.4) 0%, transparent 70%);
+    padding: 180px 0 100px;
+    color: var(--branco);
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
 }
 
-/* NOISE TEXTURE */
-body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 9999;
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1; /* Títulos sênior, sem achatamento */
+    margin-bottom: 20px;
 }
+
+.highlight { color: var(--azul); -webkit-text-fill-color: transparent; -webkit-text-stroke: 1px var(--branco); opacity: 0.8; }
+
+.hero-desc { font-size: 1.2rem; max-width: 600px; margin-bottom: 40px; font-weight: 300; color: rgba(255,255,255,0.8); }
+
+/* BOTOES */
+.btn { display: inline-block; padding: 15px 35px; border-radius: 4px; font-weight: 600; text-decoration: none; transition: 0.3s; margin-right: 15px; }
+.btn-white { background: var(--branco); color: var(--azul-escuro); }
+.btn-white:hover { background: var(--azul); color: var(--branco); transform: translateY(-3px); }
+.btn-outline-white { border: 1px solid var(--branco); color: var(--branco); }
+
+/* STATS */
+.hero-stats { display: flex; gap: 50px; margin-top: 60px; }
+.stat-item { display: flex; flex-direction: column; }
+.counter { font-family: var(--font-heading); font-size: 2.5rem; color: var(--azul); }
+.stat-item label { font-size: 0.7rem; text-transform: uppercase; color: rgba(255,255,255,0.5); }
