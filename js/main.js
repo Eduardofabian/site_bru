@@ -1,19 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const nav = document.getElementById('nav-root');
+    const navRoot = document.getElementById('nav-root');
     const openChat = document.getElementById('open-chat');
     const closeChat = document.getElementById('close-chat');
-    const chatWidget = document.getElementById('chat-ui');
+    const chatWidget = document.getElementById('chat-box');
 
-    // 1. NAVBAR DUAL-STATE (COMPACTAO AO SCROLL)
+    // 1. NAVBAR DUAL-STATE (LÓGICA INDICIUM)
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            nav.classList.add('scrolled');
+        if (window.scrollY > 40) {
+            navRoot.classList.add('scrolled');
         } else {
-            nav.classList.remove('scrolled');
+            navRoot.classList.remove('scrolled');
         }
     }, { passive: true });
 
-    // 2. CHATBOT TOGGLE
+    // 2. BOTÃO SOBRE (SMOOTH SCROLL AO TOPO)
+    const homeLinks = document.querySelectorAll('a[href="#home"]');
+    homeLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    // 3. CHATBOT TOGGLE
     openChat.addEventListener('click', () => {
         chatWidget.style.display = chatWidget.style.display === 'flex' ? 'none' : 'flex';
     });
@@ -21,25 +30,25 @@ document.addEventListener('DOMContentLoaded', () => {
         chatWidget.style.display = 'none';
     });
 
-    // 3. CONTADORES (INTERSECTION OBSERVER)
+    // 4. CONTADORES (INTERSECTION OBSERVER)
     const counters = document.querySelectorAll('.counter');
-    const obs = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const target = +entry.target.getAttribute('data-target');
                 let count = 0;
                 const update = () => {
-                    const inc = target / 50;
+                    const inc = target / 60;
                     if (count < target) {
                         count += inc;
                         entry.target.innerText = Math.ceil(count);
-                        setTimeout(update, 20);
+                        setTimeout(update, 15);
                     } else { entry.target.innerText = target; }
                 };
                 update();
-                obs.unobserve(entry.target);
+                observer.unobserve(entry.target);
             }
         });
     }, { threshold: 0.8 });
-    counters.forEach(c => obs.observe(c));
+    counters.forEach(c => observer.observe(c));
 });
