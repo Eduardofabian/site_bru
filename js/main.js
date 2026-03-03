@@ -1,57 +1,41 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const nav = document.getElementById('main-nav');
-    const counters = document.querySelectorAll('.counter');
-    let ticking = false;
-
-    // 1. NAVBAR SCROLL LOGIC
+    const navWrapper = document.getElementById('main-nav');
+    
+    // 1. LÓGICA DA NAVBAR (COMPACTA AO SCROLL)
     window.addEventListener('scroll', () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                if (window.scrollY > 20) {
-                    nav.classList.add('state-compact');
-                } else {
-                    nav.classList.remove('state-compact');
-                }
-                ticking = false;
-            });
-            ticking = true;
+        if (window.scrollY > 50) {
+            navWrapper.classList.add('scrolled');
+        } else {
+            navWrapper.classList.remove('scrolled');
         }
     }, { passive: true });
 
-    // 2. COUNTERS ANIMATION (USANDO INTERSECTION OBSERVER)
-    const statsObserver = new IntersectionObserver((entries) => {
+    // 2. CONTADORES ANIMADOS
+    const counters = document.querySelectorAll('.counter');
+    const options = { threshold: 0.5 };
+
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                startCounters();
-                statsObserver.unobserve(entry.target);
+                const target = entry.target;
+                const countTo = +target.getAttribute('data-target');
+                let count = 0;
+                const speed = countTo / 100;
+
+                const updateCount = () => {
+                    count += speed;
+                    if (count < countTo) {
+                        target.innerText = Math.ceil(count);
+                        setTimeout(updateCount, 20);
+                    } else {
+                        target.innerText = countTo;
+                    }
+                };
+                updateCount();
+                observer.unobserve(target);
             }
         });
-    }, { threshold: 0.5 });
+    }, options);
 
-    function startCounters() {
-        counters.forEach(counter => {
-            const target = +counter.getAttribute('data-target');
-            const duration = 2000;
-            let start = 0;
-            const increment = target / (duration / 16);
-
-            const update = () => {
-                start += increment;
-                if (start < target) {
-                    counter.innerText = Math.ceil(start);
-                    requestAnimationFrame(update);
-                } else {
-                    counter.innerText = target;
-                }
-            };
-            update();
-        });
-    }
-
-    const statsSection = document.querySelector('.hero-stats');
-    if (statsSection) statsObserver.observe(statsSection);
-
-    // 3. CONSOLE BRANDING (ELEGANCE)
-    console.log('%c🏢 BRUEMI GESTÃO', 'color: #C8962E; font-size: 20px; font-weight: bold;');
-    console.log('%cPerformance: Optimized | Typography: Balanced', 'color: #8A97B0;');
+    counters.forEach(counter => observer.observe(counter));
 });
