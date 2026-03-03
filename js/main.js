@@ -1,28 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const navRoot = document.getElementById('nav-root');
+    const navContainer = document.getElementById('nav-root');
     const openChat = document.getElementById('open-chat');
     const closeChat = document.getElementById('close-chat');
-    const chatWidget = document.getElementById('chat-box');
+    const chatWidget = document.getElementById('chat-ui');
 
-    // 1. NAVBAR DUAL-STATE (LÓGICA INDICIUM)
+    // 1. NAVBAR DUAL-STATE (COMPACTA AO SCROLL)
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 40) {
-            navRoot.classList.add('scrolled');
+        if (window.scrollY > 50) {
+            navContainer.classList.add('scrolled');
         } else {
-            navRoot.classList.remove('scrolled');
+            navContainer.classList.remove('scrolled');
         }
     }, { passive: true });
 
-    // 2. BOTÃO SOBRE (SMOOTH SCROLL AO TOPO)
-    const homeLinks = document.querySelectorAll('a[href="#home"]');
-    homeLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    });
-
-    // 3. CHATBOT TOGGLE
+    // 2. CHATBOT TOGGLE
     openChat.addEventListener('click', () => {
         chatWidget.style.display = chatWidget.style.display === 'flex' ? 'none' : 'flex';
     });
@@ -30,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chatWidget.style.display = 'none';
     });
 
-    // 4. CONTADORES (INTERSECTION OBSERVER)
+    // 3. CONTADORES (INTERSECTION OBSERVER)
     const counters = document.querySelectorAll('.counter');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
