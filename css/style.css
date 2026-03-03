@@ -1,87 +1,404 @@
-:root {
-    --azul: #17479E;
-    --azul-dark: #0E3180;
-    --branco: #FFFFFF;
-    --cinza: #585858;
-    --font-head: 'Syne', sans-serif;
-    --font-body: 'Inter', sans-serif;
+/* ================================
+   BRUEMI - DESIGN SYSTEM SÊNIOR
+   Foco: Fintech / São Paulo Corporate
+   ================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap');
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+:root {
+    /* Paleta Oficial Bruemi */
+    --primary: #17479E;          /* Azul Destaque */
+    --primary-dark: #0E3180;     /* Azul Profundo (Hero/Footer) */
+    --accent: #C8962E;           /* Dourado sutil (opcional para detalhes) */
+    
+    /* Neutros Corporativos */
+    --white: #ffffff;
+    --gray-body: #585858;        /* Cinza padrão de leitura */
+    --gray-bg: #F8F9FA;
+    --gray-border: rgba(14, 49, 128, 0.1);
+    
+    /* Tipografia (Respiro e Legibilidade) */
+    --font-heading: 'Syne', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --line-height-body: 1.7;     /* FIX: Letras não achatam mais */
+    --line-height-head: 1.15;
+    
+    /* Sombras e Bordas */
+    --shadow-premium: 0 15px 40px rgba(14, 49, 128, 0.08);
+    --radius-sm: 4px;
+    --radius-md: 12px;
+}
+
+/* ================================
+   BASE & TIPOGRAFIA
+   ================================ */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px; /* Offset para a navbar */
+}
 
 body {
     font-family: var(--font-body);
-    color: var(--cinza);
-    background-color: var(--branco);
-    line-height: 1.7 !important; /* FIX: Letras perfeitas */
+    color: var(--gray-body);
+    background-color: var(--white);
+    line-height: var(--line-height-body);
+    overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 { font-family: var(--font-head); line-height: 1.15; color: var(--azul-dark); }
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    line-height: var(--line-height-head);
+    color: var(--primary-dark);
+    text-wrap: balance;
+}
 
-/* NAVBAR COMPACTA AO SCROLL */
-.nav-container { position: fixed; top: 0; width: 100%; z-index: 2000; transition: transform 0.4s ease; }
-.top-announcement { background: var(--azul); color: #fff; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-.nav-main { height: 85px; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; transition: 0.3s; }
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
 
-.nav-container.scrolled { transform: translateY(-36px); }
-.nav-container.scrolled .nav-main { background: var(--azul-dark); height: 75px; }
-.nav-container.scrolled .brand, .nav-container.scrolled .nav-item { color: #fff; }
+/* ================================
+   NAVBAR DANÇANTE (DUAL STATE)
+   =============================== */
+.navbar-root {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2000;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-.nav-wrapper { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.logo-box { background: var(--azul); color: #fff; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-weight: 800; border-radius: 4px; }
-.brand { font-size: 1.5rem; font-weight: 800; color: var(--azul-dark); display: block; line-height: 1; }
-.sub-brand { font-size: 0.55rem; color: var(--azul); font-weight: 700; letter-spacing: 2px; }
+.top-banner {
+    background: var(--primary);
+    color: var(--white);
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.nav-main {
+    height: 85px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--gray-border);
+    display: flex;
+    align-items: center;
+    transition: 0.3s;
+}
+
+/* Estado Scrolled: Encolhe e oculta o banner */
+.navbar-root.scrolled {
+    transform: translateY(-36px);
+}
+
+.navbar-root.scrolled .nav-main {
+    background: var(--primary-dark);
+    height: 75px;
+}
+
+.navbar-root.scrolled .brand-name, 
+.navbar-root.scrolled .nav-link {
+    color: var(--white);
+}
+
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.logo-box {
+    background: var(--primary);
+    color: #fff;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    border-radius: var(--radius-sm);
+}
+
+.brand-name { font-size: 1.5rem; font-weight: 800; color: var(--primary-dark); }
+.brand-sub { font-size: 0.55rem; color: var(--primary); display: block; font-weight: 700; letter-spacing: 2px; }
 
 .nav-links { display: flex; align-items: center; gap: 35px; list-style: none; }
-.nav-item { text-decoration: none; color: var(--azul-dark); font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
-.btn-cta { background: var(--azul); color: #fff !important; padding: 10px 22px; border-radius: 4px; text-decoration: none; font-weight: 700; }
+.nav-link { text-decoration: none; color: var(--primary-dark); font-weight: 500; font-size: 0.9rem; transition: 0.3s; }
+.nav-link:hover { color: var(--primary); }
 
-/* HERO - FUNDO ESCURO / CONTRASTE BRANCO */
-.hero { background: var(--azul-dark); padding: 220px 0 110px; position: relative; overflow: hidden; color: #fff; }
-.hero-grid-overlay { position: absolute; inset: 0; background-image: radial-gradient(var(--azul) 1px, transparent 1px); background-size: 40px 40px; opacity: 0.1; }
-.hero-content { position: relative; z-index: 2; }
-.hero-badge { display: inline-block; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--azul); padding: 6px 16px; border-radius: 100px; font-size: 0.75rem; color: #fff !important; margin-bottom: 25px; }
+.btn-cta-nav {
+    background: var(--primary);
+    color: #fff !important;
+    padding: 10px 22px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.8rem;
+    transition: 0.3s;
+}
 
-.hero-title { font-size: clamp(2.4rem, 5.5vw, 4rem); color: #fff !important; margin-bottom: 25px; }
-.highlight { color: var(--azul); -webkit-text-stroke: 1px #fff; }
-.hero-lead { font-size: 1.25rem; color: rgba(255,255,255,0.7); max-width: 700px; margin-bottom: 45px; font-weight: 300; }
+/* ================================
+   HERO (CONTRASTE ALTO)
+   ================================ */
+.hero {
+    background: var(--primary-dark);
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    color: var(--white);
+}
 
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 10% 20%, rgba(23, 71, 158, 0.4) 0%, transparent 50%);
+    opacity: 0.6;
+}
+
+.hero-content { position: relative; z-index: 2; padding-top: 100px; }
+
+.hero-pill {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--primary);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    color: var(--white) !important; /* CORRIGIDO: Branco no fundo azul */
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--white) !important;
+    margin-bottom: 25px;
+}
+
+.highlight {
+    color: var(--primary);
+    -webkit-text-stroke: 1px var(--white);
+}
+
+.hero-lead {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 650px;
+    margin-bottom: 45px;
+    font-weight: 300;
+}
+
+/* STATS HERO (BRANCO NO AZUL) */
 .hero-stats { display: flex; gap: 60px; margin-top: 60px; }
-.counter { font-size: 3rem; font-weight: 800; color: #fff !important; } /* Branco no fundo azul */
-.stat-box small { display: block; color: rgba(255,255,255,0.5); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px; }
+.counter { 
+    font-size: 3.5rem; 
+    font-weight: 800; 
+    color: var(--white) !important; /* CORRIGIDO: Branco */
+    line-height: 1;
+}
+.stat-box label { 
+    display: block; 
+    color: rgba(255, 255, 255, 0.5); 
+    text-transform: uppercase; 
+    font-size: 0.75rem; 
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
 
-/* MARQUEE FINTECH */
-.marquee-section { padding: 80px 0; background: #fff; overflow: hidden; border-bottom: 1px solid #eee; }
-.marquee-label { text-align: center; font-size: 0.8rem; text-transform: uppercase; color: #bbb; margin-bottom: 40px; letter-spacing: 2px; }
-.marquee-outer { display: flex; width: 100%; }
-.marquee-inner { display: flex; animation: scrollLogos 30s linear infinite; gap: 80px; align-items: center; }
-.c-logo { font-family: var(--font-head); font-weight: 800; font-size: 2.2rem; color: #eee; transition: 0.3s; cursor: pointer; }
-.c-logo:hover { color: var(--azul); }
-@keyframes scrollLogos { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* ================================
+   SERVICES (CARDS PREMIUM)
+   ================================ */
+.services { padding: 120px 0; background: var(--gray-bg); }
+.sec-header { text-align: center; margin-bottom: 80px; }
+.label-blue { color: var(--primary); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
 
-/* SERVICES GRID */
-.services { padding: 120px 0; background: #f9fafb; }
-.section-intro { text-align: center; margin-bottom: 60px; }
-.tag-blue { color: var(--azul); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; }
-.section-title { font-size: 2.8rem; margin: 15px 0; }
-.title-line { width: 60px; height: 4px; background: var(--azul); margin: 0 auto; }
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
 
-.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 50px; }
-.service-card { background: #fff; padding: 50px 40px; border-radius: 12px; border: 1px solid #eee; transition: 0.4s; }
-.service-card:hover { transform: translateY(-10px); border-color: var(--azul); box-shadow: 0 20px 50px rgba(0,0,0,0.05); }
-.service-card i { font-size: 2.4rem; color: var(--azul); margin-bottom: 25px; }
+.s-card {
+    background: var(--white);
+    padding: 50px 40px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-/* TESTIMONIALS */
-.testimonials { padding: 100px 0; }
-.t-card { max-width: 800px; margin: 0 auto; text-align: center; padding: 60px; background: #f4f7fa; border-radius: 20px; }
-.t-text { font-size: 1.4rem; font-style: italic; margin: 20px 0 30px; color: var(--azul-dark); }
+.s-card:hover {
+    transform: translateY(-12px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-premium);
+}
 
-/* CHATBOT */
-.chat-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--azul); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; z-index: 2500; }
-.chat-widget { position: fixed; bottom: 100px; right: 30px; width: 320px; background: #fff; border-radius: 12px; box-shadow: 0 15px 50px rgba(0,0,0,0.15); display: none; flex-direction: column; z-index: 2500; overflow: hidden; border: 1px solid #eee; }
-.chat-header { background: var(--azul-dark); color: #fff; padding: 15px; font-weight: 600; display: flex; justify-content: space-between; }
+.s-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 25px; }
+.s-card h3 { font-size: 1.25rem; margin-bottom: 15px; }
+.s-card p { font-size: 0.95rem; line-height: 1.6; color: var(--gray-body); }
 
-.footer { padding: 40px 0; background: var(--azul-dark); color: rgba(255,255,255,0.4); text-align: center; font-size: 0.75rem; }
+/* ================================
+   MARQUEE CLIENTES (FINTECH LOOK)
+   ================================ */
+.marquee-section {
+    padding: 100px 0;
+    background: var(--white);
+    overflow: hidden;
+    border-bottom: 1px solid var(--gray-border);
+}
+
+.marquee-label {
+    text-align: center;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 50px;
+    letter-spacing: 3px;
+}
+
+.marquee-wrapper { display: flex; width: 100%; }
+.marquee-content {
+    display: flex;
+    animation: scrollLogos 40s linear infinite;
+    gap: 100px;
+    align-items: center;
+}
+
+.c-logo {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 2.2rem;
+    color: #eee; /* Cor base neutra */
+    transition: 0.4s;
+    white-space: nowrap;
+    cursor: default;
+}
+
+.c-logo:hover {
+    color: var(--primary);
+    transform: scale(1.1);
+}
+
+@keyframes scrollLogos {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+/* ================================
+   DEPOIMENTOS (T-CARD)
+   ================================ */
+.testimonials { padding: 120px 0; background: var(--gray-bg); }
+.testimonial-card {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 70px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-premium);
+    text-align: center;
+    position: relative;
+}
+
+.quote-icon {
+    font-size: 4rem;
+    color: var(--primary);
+    opacity: 0.1;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.quote-text {
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--primary-dark);
+    margin: 20px 0 40px;
+    line-height: 1.6;
+}
+
+.quote-author strong { display: block; font-size: 1.1rem; color: var(--primary-dark); }
+.quote-author span { font-size: 0.9rem; color: var(--cinza); }
+
+/* ================================
+   CHATBOT WIDGET
+   ================================ */
+.chat-trigger {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    cursor: pointer;
+    z-index: 3000;
+    box-shadow: 0 10px 30px rgba(23, 71, 158, 0.3);
+}
+
+.chat-window {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 350px;
+    background: #fff;
+    border-radius: var(--radius-md);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    display: none; /* JS controla */
+    flex-direction: column;
+    z-index: 3000;
+    overflow: hidden;
+    border: 1px solid var(--gray-border);
+}
+
+.chat-header {
+    background: var(--primary-dark);
+    color: #fff;
+    padding: 20px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ================================
+   RESPONSIVIDADE
+   ================================ */
+@media (max-width: 992px) {
+    .hero-title { font-size: 3rem; }
+    .hero-stats { gap: 30px; }
+}
+
+@media (max-width: 768px) {
+    .nav-links { display: none; } /* Adicionar menu mobile se necessário */
+    .hero-stats { flex-direction: column; align-items: flex-start; }
+    .testimonial-card { padding: 40px 20px; }
+    .quote-text { font-size: 1.1rem; }
+}
