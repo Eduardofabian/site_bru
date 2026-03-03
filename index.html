@@ -3,27 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bruemi Gestão Empresarial | Inteligência Estratégica</title>
-    
+    <title>Bruemi | Inteligência Estratégica & Valuation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <header class="navbar-root" id="main-nav">
+    <header class="nav-wrapper" id="nav-root">
         <div class="callout-banner">
-            <div class="container">
-                <span>Bruemi: Inteligência Estratégica para o Mercado de Capitais</span>
-            </div>
+            <span>Consultoria Estratégica Premium em São Paulo</span>
         </div>
-        <nav class="nav-bar">
+        <nav class="nav-main">
             <div class="container nav-flex">
                 <a href="#home" class="logo">
-                    <div class="logo-icon">B</div>
+                    <div class="logo-box">B</div>
                     <div class="logo-type">
                         <span class="brand">Bruemi</span>
                         <span class="sub-brand">GESTÃO EMPRESARIAL</span>
@@ -32,70 +28,114 @@
                 <ul class="nav-links">
                     <li><a href="#sobre">Sobre</a></li>
                     <li><a href="#servicos">Soluções</a></li>
-                    <li><a href="#clientes">Clientes</a></li>
-                    <li><a href="#contato" class="btn-nav">Contato</a></li>
+                    <li><a href="#cases">Cases</a></li>
+                    <li><a href="#contato" class="btn-nav-cta">Falar com Consultor</a></li>
                 </ul>
-                <button class="burger" id="burger-menu">
-                    <span></span><span></span><span></span>
-                </button>
+                <div class="burger" id="mobile-toggle"><span></span><span></span><span></span></div>
             </div>
         </nav>
     </header>
 
     <main>
         <section class="hero" id="home">
-            <div class="hero-grid-overlay"></div>
-            <div class="container hero-container">
-                <div class="hero-content">
-                    <div class="hero-pill">Consultoria Sênior São Paulo</div>
-                    <h1 class="hero-title">Decisões de Impacto <br><span class="highlight">Baseadas em Dados</span></h1>
-                    <p class="hero-lead">Valuation, M&A e Planejamento Estratégico com a solidez que sua empresa exige.</p>
-                    <div class="hero-buttons">
-                        <a href="#contato" class="btn btn-filled">Agendar Consultoria</a>
-                        <a href="#servicos" class="btn btn-outline">Nossas Soluções</a>
+            <div class="container hero-grid">
+                <div class="hero-text">
+                    <div class="pill">Empresa Sênior consolidada</div>
+                    <h1 class="hero-title">Decisões de Impacto <br><span class="txt-blue">Baseadas em Dados</span></h1>
+                    <p class="hero-p">Valuation e M&A com a precisão que o mercado de capitais exige.</p>
+                    <div class="hero-btns">
+                        <a href="#contato" class="btn btn-blue">Agendar Consultoria</a>
+                        <a href="#servicos" class="btn btn-outline">Nossos Serviços</a>
+                    </div>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="counter" data-target="500">0</span><span class="plus">M+</span>
+                        <small>Em Valuations</small>
+                    </div>
+                    <div class="stat">
+                        <span class="counter" data-target="50">0</span><span class="plus">+</span>
+                        <small>Empresas Atendidas</small>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="section-statement">
-            <div class="container">
-                <h2 class="reveal-text">Somos uma consultoria sênior focada em transformar estratégia em valor mensurável e escalável para o seu negócio.</h2>
+        <section class="marquee-section" id="cases">
+            <div class="marquee-title">Empresas que confiam na Bruemi</div>
+            <div class="marquee">
+                <div class="marquee-content">
+                    <div class="c-logo">Tesla</div>
+                    <div class="c-logo">Galápagos</div>
+                    <div class="c-logo">Today</div>
+                    <div class="c-logo">Mind</div>
+                    <div class="c-logo">Pulsar</div>
+                    <div class="c-logo">Recheio</div>
+                    <div class="c-logo">Tesla</div>
+                    <div class="c-logo">Galápagos</div>
+                    <div class="c-logo">Today</div>
+                    <div class="c-logo">Mind</div>
+                    <div class="c-logo">Pulsar</div>
+                    <div class="c-logo">Recheio</div>
+                </div>
             </div>
         </section>
 
-        <section class="section-light" id="sobre">
+        <section class="services" id="servicos">
             <div class="container">
-                <div class="split-grid">
-                    <div class="text-side">
-                        <span class="side-tag">Quem Somos</span>
-                        <h2 class="title-dark">Expertise aplicada aos desafios <br>do seu setor.</h2>
-                        <p class="body-gray">Na Bruemi, não entregamos apenas dados. Entregamos a inteligência necessária para que empresas de capital elevado naveguem em processos de fusão, aquisição e valuation com total previsibilidade.</p>
+                <div class="sec-header">
+                    <h2 class="title-sec">Nossas Soluções</h2>
+                    <p class="p-sec">Inteligência para cada fase do seu negócio.</p>
+                </div>
+                <div class="services-grid">
+                    <div class="s-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Valuation</h3>
+                        <p>Avaliação precisa baseada em métricas globais.</p>
                     </div>
-                    <div class="stats-side">
-                        <div class="stat-card">
-                            <span class="counter" data-target="500">0</span><span class="unit">M+</span>
-                            <small>Em Valuations</small>
-                        </div>
-                        <div class="stat-card">
-                            <span class="counter" data-target="50">0</span><span class="unit">+</span>
-                            <small>Projetos Entregues</small>
-                        </div>
+                    <div class="s-card">
+                        <i class="fas fa-handshake"></i>
+                        <h3>Fusões & Aquisições</h3>
+                        <p>Assessoria completa em processos de M&A.</p>
+                    </div>
+                    <div class="s-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Capital Humano</h3>
+                        <p>Gestão estratégica de pessoas e cultura.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <div class="container">
+                <div class="t-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"A Bruemi foi fundamental para nossa reestruturação financeira e operacional. Expertise incomparável."</p>
+                    <div class="t-author">
+                        <strong>Yuri Fang</strong>
+                        <span>CEO, Galápagos Jogos</span>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
+    <div class="chat-widget" id="chat-box">
+        <div class="chat-header">Bruemi Bot <span id="close-chat">×</span></div>
+        <div class="chat-body" id="chat-content">
+            <div class="bot-msg">Olá! Como a Bruemi pode ajudar sua empresa hoje?</div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" placeholder="Digite sua dúvida...">
+            <button><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    <div class="chat-toggle" id="open-chat"><i class="fas fa-comment-dots"></i></div>
+
     <footer class="footer">
-        <div class="container footer-grid">
-            <div class="footer-info">
-                <div class="logo-white">Bruemi</div>
-                <p>Inteligência Estratégica Orientada por Dados.</p>
-            </div>
-            <div class="footer-copy">
-                © 2026 Bruemi Gestão Empresarial. Todos os direitos reservados.
-            </div>
+        <div class="container">
+            <p>© 2026 Bruemi Gestão Empresarial. São Paulo, Brasil.</p>
         </div>
     </footer>
 
